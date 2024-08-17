@@ -28,14 +28,11 @@ if __name__ == '__main__':
             continue
         image,result = show_queue.get()
         for boxs in result:
-            # 把坐标从 float 类型转换为 int 类型
             det_x1, det_y1, det_x2, det_y2,conf,label = boxs
-            # 裁剪目标框对应的图像640*img1/img0 
             x1 = int(det_x1*image.shape[1])
             y1 = int(det_y1*image.shape[0])
             x2 = int(det_x2*image.shape[1])
             y2 = int(det_y2*image.shape[0])
-            # 绘制矩形边界框
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(image, "{:.2f}".format(conf), (int(x1), int(y1-10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
             cv2.putText(image, yolo.label[int(label)], (int(x1), int(y1-30)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
