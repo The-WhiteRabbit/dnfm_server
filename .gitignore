@@ -1,0 +1,5 @@
+__pycache__/game_action.cpython-38.pyc
+__pycache__/game_control.cpython-38.pyc
+__pycache__/scrcpy_adb.cpython-38.pyc
+hero/__pycache__/naima.cpython-38.pyc
+utils/__pycache__/yolov5_onnx.cpython-38.pyc

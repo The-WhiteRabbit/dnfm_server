@@ -4,7 +4,6 @@ import json
 from scrcpy_adb import ScrcpyADB
 import math
 import random
-
 class GameControl:
     def __init__(self, adb: ScrcpyADB,config):
         with open(config, 'r') as file:
@@ -28,7 +27,6 @@ class GameControl:
     def move(self, angle: int):
         # 计算轮盘x, y坐标
         x, y = self.calc_mov_point(angle)
-        # x, y  = self._ramdon_xy(x, y)
         if angle == 0:
             if self.move_touch == "none":
                 return
@@ -43,7 +41,6 @@ class GameControl:
             else:
                 self.move_touch = "move"
                 self.adb.touch_move(x, y,1)
-                # self.adb.touch_swipe(self.last_move[0],self.last_move[1],x,y,5,0.001)
                 self.last_move = [x,y]
     def attack(self,flag : bool=True):
         if flag == False:

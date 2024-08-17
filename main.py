@@ -23,7 +23,7 @@ if __name__ == '__main__':
     infer_queue = AutoCleaningQueue(maxsize=3)
     show_queue = AutoCleaningQueue(maxsize=3)
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    client = ScrcpyADB(image_queue,max_fps = 20)
+    client = ScrcpyADB(image_queue,max_fps = 15)
     yolo = YOLOv5(os.path.join(current_dir,"./utils/dnfm.onnx"),image_queue,infer_queue,show_queue)
     control = GameControl(client,os.path.join(current_dir,"./skill.json"))
     action = GameAction(control,infer_queue)

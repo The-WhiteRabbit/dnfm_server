@@ -9,7 +9,7 @@ import json
 import math
 import scrcpy
 class ScrcpyADB:
-    def __init__(self,image_queue,max_fps=15):
+    def __init__(self,image_queue,max_fps=30):
         devices = adb.device_list()
         client = scrcpy.Client(device=devices[0],max_fps=max_fps,block_frame=True)
         print(devices, client)

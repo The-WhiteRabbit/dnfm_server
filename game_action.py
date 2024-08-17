@@ -164,11 +164,9 @@ class GameAction:
     def __init__(self, ctrl: GameControl,queue):
         self.queue = queue
         self.ctrl = ctrl
-        self.orb = cv2.ORB_create()
-        self.retry_img = cv2.imread('/home/linux/workspace/dnfm/dnfm-yolo-tutorial/match/再次挑战按钮.png')
         self.detect_retry = False
         self.pre_state = True
-        self.stop_event = False
+        self.stop_event = True
         self.reset_event = False
         self.control_attack = Naima(ctrl)
         self.room_num = -1
@@ -189,7 +187,6 @@ class GameAction:
         self.thread.daemon = True  # 设置为守护线程（可选）
         self.thread.start()
     def control(self):
-        # self.start_fight()
         last_room_pos = []
         hero_track = deque()
         hero_track.appendleft([0,0])
@@ -197,6 +194,7 @@ class GameAction:
         while self.thread_run:
             if self.stop_event:
                 time.sleep(0.001)
+                self.ctrl.reset()
                 continue
             if self.queue.empty():
                 time.sleep(0.001)
@@ -230,7 +228,7 @@ class GameAction:
                     print("目标",self.buwanjia[self.room_num])
                 else:
                     continue
-            self.calculate_hero_pos(hero_track,hero,Diamond)#计算英雄位置
+            self.calculate_hero_pos(hero_track,hero)#计算英雄位置
             if len(card)>=8:
                 time.sleep(1)
                 self.ctrl.click(0.25*image.shape[0],0.25*image.shape[1])
@@ -242,8 +240,8 @@ class GameAction:
             elif len(equipment)>0:
                 outprint = '有材料'
                 if len(gate)>0:
-                    close_gate,distance = find_close_point_to_box(gate,hero_track[0])#最近的门
-                    farthest_item,distance = find_farthest_box(equipment,close_gate)#最远的材料
+                    close_gate,distance = find_close_point_to_box(gate,hero_track[0])
+                    farthest_item,distance = find_farthest_box(equipment,close_gate)
                     angle = calculate_point_to_box_angle(hero_track[0],farthest_item)
                 else:
                     close_item,distance = find_close_point_to_box(equipment,hero_track[0])
@@ -269,8 +267,13 @@ class GameAction:
                 self.ctrl.move(angle)
                 self.ctrl.attack(False)
             elif self.detect_retry == True:
-                #重新挑战
-                None
+                #重新挑战：自行发挥
+                print("detect_retry")
+                self.ctrl.move(0)
+                self.detect_retry =False
+                self.room_num = 0
+                hero_track = deque()
+                hero_track.appendleft([0,0])
             else :
                 outprint = "无目标"
                 if self.room_num == 4:
@@ -280,7 +283,7 @@ class GameAction:
                 self.ctrl.move(angle)
                 self.ctrl.attack(False)
             print(f"\r当前进度:{outprint},角度{angle}，位置{hero_track[0]}", end="")
-    def calculate_hero_pos(self,hero_track,boxs,Diamond):
+    def calculate_hero_pos(self,hero_track,boxs):
         if len(boxs)==0:
             None
         elif len(boxs)==1:
