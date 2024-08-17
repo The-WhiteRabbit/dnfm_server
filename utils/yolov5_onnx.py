@@ -3,7 +3,6 @@ import numpy as np
 import torch
 from torchvision.ops import nms
 from PIL import Image,ImageOps
-import torch
 import threading
 import time
 import onnxruntime as ort
