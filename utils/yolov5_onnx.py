@@ -4,6 +4,9 @@ import torch
 from torchvision.ops import nms
 from PIL import Image,ImageOps
 import torch
+import threading
+import time
+import onnxruntime as ort
 def resize_img( im):
     target_size = 640   # 目标尺寸
     width, height = im.size
@@ -280,9 +283,7 @@ def non_max_suppression(
             output[xi] = output[xi].to(device)
 
     return output
-import threading
-import time
-import onnxruntime as ort
+
 class YOLOv5:
     def __init__(self, model_path,image_queue,infer_queue,show_queue):
         self.label = ['Monster', 'Monster_ds', 'Monster_szt', 'card', 'equipment', 'go', 'hero', 'map', 'opendoor_d', 'opendoor_l', 'opendoor_r', 'opendoor_u', 'pet', 'Diamond']

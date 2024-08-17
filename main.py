@@ -1,18 +1,14 @@
 import cv2
 import numpy as np
-image = np.zeros((1, 1, 3), np.uint8)
-cv2.imshow('image', image)
-cv2.waitKey(1)
-cv2.destroyWindow('image')
+
 from utils.yolov5_onnx import YOLOv5
 from scrcpy_adb import ScrcpyADB
 from game_control import GameControl
-from game_action import GameAction,is_image_almost_black
+from game_action import GameAction
 import queue
 import time
-import json
-import copy
 import os
+
 class AutoCleaningQueue(queue.Queue):
     def put(self, item, block=True, timeout=None):
         if self.full():

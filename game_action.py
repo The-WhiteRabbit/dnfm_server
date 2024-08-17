@@ -1,6 +1,4 @@
-from typing import Tuple
 from game_control import GameControl
-from scrcpy_adb import ScrcpyADB
 import time
 import cv2
 import math

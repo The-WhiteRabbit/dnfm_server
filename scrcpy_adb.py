@@ -1,12 +1,7 @@
 
 import cv2
-import numpy as np
 from adbutils import adb
 import time
-import queue
-from typing import Tuple
-import json
-import math
 import scrcpy
 class ScrcpyADB:
     def __init__(self,image_queue,max_fps=30):
