@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
-
+image = np.zeros((1, 1, 3), np.uint8)
+cv2.imshow('image', image)
+cv2.waitKey(1)
+cv2.destroyWindow('image')
 from utils.yolov5_onnx import YOLOv5
 from scrcpy_adb import ScrcpyADB
 from game_control import GameControl
